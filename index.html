@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetailIQ — Sales & Profit Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     TOPBAR
+═══════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="logo"><div class="logo-dot"></div>RetailIQ</div>
+  <div class="topbar-right">
+    <span class="badge badge-green">SUPERSTORE DATASET</span>
+    <span class="badge badge-purple">2014 – 2017</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Year</span>
+    <div class="filter-group" id="yf">
+      <button class="filter-btn active" onclick="fy('All')">All</button>
+      <button class="filter-btn" onclick="fy('2014')">2014</button>
+      <button class="filter-btn" onclick="fy('2015')">2015</button>
+      <button class="filter-btn" onclick="fy('2016')">2016</button>
+      <button class="filter-btn" onclick="fy('2017')">2017</button>
+    </div>
+    <div class="fdiv"></div>
+    <span class="filter-label">Category</span>
+    <div class="filter-group" id="cf">
+      <button class="filter-btn active" onclick="fc('All')">All</button>
+      <button class="filter-btn" onclick="fc('Technology')">Technology</button>
+      <button class="filter-btn" onclick="fc('Furniture')">Furniture</button>
+      <button class="filter-btn" onclick="fc('Office Supplies')">Office Supplies</button>
+    </div>
+    <div class="fdiv"></div>
+    <span class="filter-label">Region</span>
+    <div class="filter-group" id="rf">
+      <button class="filter-btn active" onclick="fr('All')">All</button>
+      <button class="filter-btn" onclick="fr('West')">West</button>
+      <button class="filter-btn" onclick="fr('East')">East</button>
+      <button class="filter-btn" onclick="fr('Central')">Central</button>
+      <button class="filter-btn" onclick="fr('South')">South</button>
+    </div>
+  </div>
+
+  <!-- INSIGHT STRIP -->
+  <div class="insight-strip">
+    💡 <span id="ins">
+      <strong>Technology</strong> leads profitability at <strong>$145K profit</strong> vs Furniture's
+      <strong>$18K</strong>. West drives <strong>31.6%</strong> of total sales.
+      Consumer segment contributes <strong>50.6%</strong> of all orders.
+    </span>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card fade-in">
+      <div class="kpi-label">Total Sales</div>
+      <div class="kpi-value" id="k1">$2.30M</div>
+      <div class="kpi-sub"><span class="kpi-chg up">↑ 29.7%</span> vs prior period</div>
+    </div>
+    <div class="kpi-card fade-in">
+      <div class="kpi-label">Total Profit</div>
+      <div class="kpi-value" id="k2">$286K</div>
+      <div class="kpi-sub"><span class="kpi-chg up">↑ 14.2%</span> profit growth</div>
+    </div>
+    <div class="kpi-card fade-in">
+      <div class="kpi-label">Total Orders</div>
+      <div class="kpi-value" id="k3">9,994</div>
+      <div class="kpi-sub"><span class="kpi-chg up">↑ 22.3%</span> order volume</div>
+    </div>
+    <div class="kpi-card fade-in">
+      <div class="kpi-label">Profit Margin</div>
+      <div class="kpi-value" id="k4">12.5%</div>
+      <div class="kpi-sub"><span class="kpi-chg dn">↓ 1.1pp</span> margin squeeze</div>
+    </div>
+  </div>
+
+  <!-- ROW 1 — Sales Trend + Region Donut -->
+  <div class="chart-row r2">
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Sales &amp; Profit Trend</div>
+          <div class="chart-sub">MONTHLY PERFORMANCE</div>
+        </div>
+        <span class="chart-tag">LINE CHART</span>
+      </div>
+      <canvas id="tc" height="220"></canvas>
+    </div>
+
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Sales by Region</div>
+          <div class="chart-sub">GEOGRAPHIC SPLIT</div>
+        </div>
+        <span class="chart-tag">DONUT</span>
+      </div>
+      <canvas id="rc" height="165"></canvas>
+      <div class="region-grid">
+        <div class="region-card">
+          <div><div class="rname">West</div><div class="rsales">$725,458</div></div>
+          <div class="rpct" style="color:var(--accent)">31.6%</div>
+        </div>
+        <div class="region-card">
+          <div><div class="rname">East</div><div class="rsales">$678,781</div></div>
+          <div class="rpct" style="color:var(--accent2)">29.6%</div>
+        </div>
+        <div class="region-card">
+          <div><div class="rname">Central</div><div class="rsales">$501,240</div></div>
+          <div class="rpct" style="color:var(--accent3)">21.8%</div>
+        </div>
+        <div class="region-card">
+          <div><div class="rname">South</div><div class="rsales">$391,722</div></div>
+          <div class="rpct" style="color:var(--accent4)">17.1%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 — Category Bar + Segment Pie + Sub-category H-Bar -->
+  <div class="chart-row r3">
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Profit by Category</div>
+          <div class="chart-sub">SALES vs PROFIT</div>
+        </div>
+        <span class="chart-tag">BAR</span>
+      </div>
+      <canvas id="cc" height="210"></canvas>
+    </div>
+
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Customer Segments</div>
+          <div class="chart-sub">SEGMENT SHARE</div>
+        </div>
+        <span class="chart-tag">PIE</span>
+      </div>
+      <canvas id="sc" height="165"></canvas>
+      <div class="seg-list">
+        <div class="seg-item">
+          <div class="seg-dot" style="background:#00e5a0"></div>
+          <div class="seg-info">
+            <div class="seg-name">Consumer</div>
+            <div class="sbt"><div class="sbf" style="width:50.6%;background:#00e5a0"></div></div>
+          </div>
+          <div class="seg-val">50.6%</div>
+        </div>
+        <div class="seg-item">
+          <div class="seg-dot" style="background:#7c6bff"></div>
+          <div class="seg-info">
+            <div class="seg-name">Corporate</div>
+            <div class="sbt"><div class="sbf" style="width:30.7%;background:#7c6bff"></div></div>
+          </div>
+          <div class="seg-val">30.7%</div>
+        </div>
+        <div class="seg-item">
+          <div class="seg-dot" style="background:#ffd166"></div>
+          <div class="seg-info">
+            <div class="seg-name">Home Office</div>
+            <div class="sbt"><div class="sbf" style="width:18.7%;background:#ffd166"></div></div>
+          </div>
+          <div class="seg-val">18.7%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Sub-Category Profit</div>
+          <div class="chart-sub">TOP &amp; BOTTOM</div>
+        </div>
+        <span class="chart-tag">H-BAR</span>
+      </div>
+      <canvas id="scc" height="240"></canvas>
+    </div>
+  </div>
+
+  <!-- ROW 3 — Products Table + Quarterly Bar -->
+  <div class="chart-row r2b">
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top Products by Sales</div>
+          <div class="chart-sub">RANKED PERFORMANCE</div>
+        </div>
+        <span class="chart-tag">TABLE</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Product</th><th>Category</th>
+              <th>Sales</th><th>Profit</th><th>Margin</th>
+            </tr>
+          </thead>
+          <tbody id="ptb"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="chart-card fade-in">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Quarterly Sales Growth</div>
+          <div class="chart-sub">YOY COMPARISON</div>
+        </div>
+        <span class="chart-tag">GROUPED BAR</span>
+      </div>
+      <canvas id="qc" height="290"></canvas>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<link rel="stylesheet" href="./src/style.css">
+
+<script src="./src/data.js"></script>
+<script src="./src/charts.js"></script>
+<script src="./src/filters.js"></script>
+<script>
+  // ── Entry point ──────────────────────────────
+  buildAll('All');
+  buildTable('All');
+</script>
+</body>
+</html>
