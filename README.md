@@ -11,12 +11,6 @@ It visualizes key business KPIs like sales, profit, customer segments, regional 
 
 ---
 
-## 📸 Preview
-
-(Add screenshot in `assets/screenshots/preview.png`)
-
----
-
 ## ✨ Features
 
 ### 📈 Analytics Dashboard
